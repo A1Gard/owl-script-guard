@@ -1,0 +1,46 @@
+name: Build Electron App
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        
+    - name: Install dependencies
+      run: npm ci
+        
+    - name: Build app
+      run: npm run build
+        
+    - name: Package app
+      run: |
+        if [ "${{ runner.os }}" == "Linux" ]; then
+          npm run build:linux
+        elif [ "${{ runner.os }}" == "Windows" ]; then
+          npm run build:win
+        elif [ "${{ runner.os }}" == "macOS" ]; then
+          npm run build:mac
+        fi
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ runner.os }} build
+        path: dist
