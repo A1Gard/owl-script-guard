@@ -1,10 +1,14 @@
 name: Build Electron App
 
 on:
-  push:
-    branches: [ "master" ]
   release:
     types: [created]  # This will trigger the workflow when a new release is created
+
+permissions:
+  contents: write  # Allow the workflow to write to the repository contents
+  actions: read    # Allow the workflow to read actions
+  issues: read     # Allow the workflow to read issues
+  pull-requests: read  # Allow the workflow to read pull requests
 
 jobs:
 
