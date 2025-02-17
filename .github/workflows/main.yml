@@ -43,8 +43,16 @@ jobs:
           yarn build:mac
         fi
         
+    - name: Check if Release Exists
+      id: check_release
+      run: |
+        TAG_NAME=${{ github.ref }}
+        RELEASE=$(gh release view $TAG_NAME --json id --jq '.id' 2>/dev/null)
+        echo "release_id=$RELEASE" >> $GITHUB_ENV
+
     - name: Create Release
       id: create_release
+      if: env.release_id == ''
       uses: actions/create-release@v1
       with:
         tag_name: ${{ github.ref }}  # Use the tag name from the release
@@ -61,3 +69,5 @@ jobs:
         asset_path: dist/your-app-file  # Change this to the path of your built app
         asset_name: your-app-file  # Change this to the desired name for the asset
         asset_content_type: application/octet-stream  # Change this to the appropriate content type
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
