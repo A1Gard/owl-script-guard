@@ -1,6 +1,6 @@
 # owl-script-gaurd
 
-An Electron application with Vue
+Javascript obfuscator gui app
 
 ## Recommended IDE Setup
 
