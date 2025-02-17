@@ -1,0 +1,41 @@
+{
+  "name": "owl-script-gaurd",
+  "version": "1.0.0",
+  "description": "Javascript obfuscator gui app",
+  "main": "./out/main/index.js",
+  "author": "A1gard",
+  "homepage": "https://xstack.ir",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint --cache .",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:linux": "npm run build && electron-builder --linux"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/utils": "^4.0.0"
+  },
+  "devDependencies": {
+    "@electron-toolkit/eslint-config": "^2.0.0",
+    "@electron-toolkit/eslint-config-prettier": "^3.0.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "electron": "^34.2.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^3.0.0",
+    "eslint": "^9.20.1",
+    "eslint-plugin-vue": "^9.32.0",
+    "javascript-obfuscator": "^4.1.1",
+    "prettier": "^3.5.1",
+    "terser": "^5.39.0",
+    "uglify-es": "^3.3.9",
+    "uglify-js": "^3.19.3",
+    "vite": "^6.1.0",
+    "vue": "^3.5.13"
+  }
+}
