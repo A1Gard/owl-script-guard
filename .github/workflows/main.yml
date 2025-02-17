@@ -3,8 +3,8 @@ name: Build Electron App
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  release:
+    types: [created]  # This will trigger the workflow when a new release is created
 
 jobs:
 
@@ -43,8 +43,8 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: v1.0.0  # Change this to your desired versioning scheme
-        release_name: Release v1.0.0  # Change this to your desired release name
+        tag_name: ${{ github.ref }}  # Use the tag name from the release
+        release_name: Release ${{ github.ref }}  # Use the tag name for the release name
         draft: false
         prerelease: false
       env:
