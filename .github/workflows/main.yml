@@ -39,8 +39,21 @@ jobs:
           npm run build:mac
         fi
         
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
       with:
-        name: ${{ runner.os }} build
-        path: dist
+        tag_name: v1.0.0  # Change this to your desired versioning scheme
+        release_name: Release v1.0.0  # Change this to your desired release name
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/your-app-file  # Change this to the path of your built app
+        asset_name: your-app-file  # Change this to the desired name for the asset
+        asset_content_type: application/octet-stream  # Change this to the appropriate content type
