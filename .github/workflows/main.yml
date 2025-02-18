@@ -4,13 +4,11 @@ on:
   release:
     types: [created]
 
-permissions:
-  contents: write  # Required to create releases
-  packages: write
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -26,17 +24,15 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Package app for Linux
-        if: runner.os == 'Linux'
-        run: yarn build:linux
-
-      - name: Package app for Windows
-        if: runner.os == 'Windows'
-        run: yarn build:win
-
-      - name: Package app for macOS
-        if: runner.os == 'macOS'
-        run: yarn build:mac
+      - name: Package app
+        run: |
+          if [ "${{ runner.os }}" == "Linux" ]; then
+            yarn build:linux
+          elif [ "${{ runner.os }}" == "Windows" ]; then
+            yarn build:win
+          elif [ "${{ runner.os }}" == "macOS" ]; then
+            yarn build:mac
+          fi
 
       - name: Check if Release Exists
         id: check_release
@@ -45,15 +41,17 @@ jobs:
           RELEASE=$(gh release view $TAG_NAME --json id --jq '.id' 2>/dev/null || echo "")
           echo "release_id=$RELEASE" >> $GITHUB_ENV
 
+      - name: Delete Existing Release
+        if: env.release_id != ''
+        run: |
+          TAG_NAME=${{ github.ref }}
+          gh release delete $TAG_NAME --yes
+
       - name: Create Release
         id: create_release
-        if: env.release_id == ''
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+        run: |
+          TAG_NAME=${{ github.ref }}
+          gh release create $TAG_NAME --title "Release $TAG_NAME" --notes "Release notes for $TAG_NAME"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -98,5 +96,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.asset_path }}
           asset_name: ${{ env.asset_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          asset_content_type: 'application/octet-stream'
