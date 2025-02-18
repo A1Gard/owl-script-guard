@@ -30,7 +30,6 @@ dmg:
 linux:
   target:
     - AppImage
-    - deb
   maintainer: xstack.ir
   category: Utility
 appImage:
