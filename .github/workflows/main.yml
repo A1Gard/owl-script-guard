@@ -79,6 +79,10 @@ jobs:
           file:  ${{ env.asset_path }}
           overwrite: true
 
+      - name: Extract tag name
+        id: extract_tag
+        run: echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       - name: Upload Release Asset mac 2
         if: runner.os == 'macOS'
         uses: svenstaro/upload-release-action@2.6.1
