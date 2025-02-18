@@ -22,15 +22,17 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Package app
-        run: |
-          if ($env:RUNNER_OS -eq "Linux") {
-            yarn build:linux
-          } elseif ($env:RUNNER_OS -eq "Windows") {
-            yarn build:win
-          } elseif ($env:RUNNER_OS -eq "macOS") {
-            yarn build:mac
-          }
+      - name: Package app for Linux
+        if: runner.os == 'Linux'
+        run: yarn build:linux
+
+      - name: Package app for Windows
+        if: runner.os == 'Windows'
+        run: yarn build:win
+
+      - name: Package app for macOS
+        if: runner.os == 'macOS'
+        run: yarn build:mac
 
       - name: Check if Release Exists
         id: check_release
