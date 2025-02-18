@@ -66,8 +66,8 @@ jobs:
         id: determine_asset_win
         if: runner.os == 'Windows'
         run: |
-              echo "asset_path=dist/owl-script-gaurd.exe" >> $GITHUB_ENV
-              echo "asset_name=owl-script-gaurd.exe" >> $GITHUB_ENV
+          echo "asset_path=dist\owl-script-gaurd-setup.exe" >> $GITHUB_ENV
+          echo "asset_name=owl-script-gaurd-setup.exe" >> $GITHUB_ENV
 
       - name: Upload Release Asset
         uses: svenstaro/upload-release-action@2.6.1
