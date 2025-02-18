@@ -49,14 +49,6 @@ jobs:
               echo "No valid Linux asset found."
               exit 1
             fi
-          elif [ "${{ runner.os }}" == "Windows" ]; then
-            if [ -f "dist/owl-script-gaurd.exe" ]; then
-              echo "asset_path=dist/owl-script-gaurd.exe" >> $GITHUB_ENV
-              echo "asset_name=owl-script-gaurd.exe" >> $GITHUB_ENV
-            else
-              echo "No valid Windows asset found."
-              exit 1
-            fi
           elif [ "${{ runner.os }}" == "macOS" ]; then
             if [ -f "dist/owl-script-gaurd.dmg" ]; then
               echo "asset_path=dist/owl-script-gaurd.dmg" >> $GITHUB_ENV
