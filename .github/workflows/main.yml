@@ -4,6 +4,10 @@ on:
   release:
     types: [created]
 
+permissions:
+  contents: write  # Required to create releases
+  packages: write
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
