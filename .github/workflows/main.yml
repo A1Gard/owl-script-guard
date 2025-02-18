@@ -42,13 +42,6 @@ jobs:
         elif [ "${{ runner.os }}" == "macOS" ]; then
           yarn build:mac
         fi
-        
-    - name: Check if Release Exists
-      id: check_release
-      run: |
-        TAG_NAME=${{ github.ref }}
-        RELEASE=$(gh release view $TAG_NAME --json id --jq '.id' 2>/dev/null)
-        echo "release_id=$RELEASE" >> $GITHUB_ENV
 
     - name: Create Release
       id: create_release
@@ -69,9 +62,6 @@ jobs:
           if [ -f "dist/owl-script-guard.AppImage" ]; then
             echo "asset_path=dist/owl-script-guard.AppImage" >> $GITHUB_ENV
             echo "asset_name=owl-script-guard.AppImage" >> $GITHUB_ENV
-          elif [ -f "dist/owl-script-guard_amd64.deb" ]; then
-            echo "asset_path=dist/owl-script-guard_amd64.deb" >> $GITHUB_ENV
-            echo "asset_name=owl-script-guard_amd64.deb" >> $GITHUB_ENV
           else
             echo "No valid Linux asset found."
             exit 1
