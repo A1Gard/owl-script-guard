@@ -11,7 +11,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: owl-script-guard.exe
+  executableName: owl-script-guards
 nsis:
   artifactName: ${name}-setup.${ext}
   shortcutName: ${productName}

@@ -37,8 +37,9 @@ jobs:
         if: runner.os == 'macOS'
         run: yarn build:mac
 
-      - name: Determine Asset to Upload
-        id: determine_asset
+      - name: Determine Asset to Upload Linux and mac
+        id: determine_asset_linux
+        if: runner.os == 'Linux' || runner.os == 'macOS'
         run: |
           if [ "${{ runner.os }}" == "Linux" ]; then
             if [ -f "dist/owl-script-gaurd.AppImage" ]; then
@@ -68,6 +69,13 @@ jobs:
               exit 1
             fi
           fi
+
+      - name: Determine Asset to Upload windows
+        id: determine_asset_win
+        if: runner.os == 'Windows'
+        run: |
+              echo "asset_path=dist/owl-script-gaurd.exe" >> $GITHUB_ENV
+              echo "asset_name=owl-script-gaurd.exe" >> $GITHUB_ENV
 
       - name: Upload Release Asset
         uses: svenstaro/upload-release-action@2.6.1
