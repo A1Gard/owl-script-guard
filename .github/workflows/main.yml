@@ -1,12 +1,14 @@
 name: Build Electron App
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
 
-permissions:
-  contents: write
-  packages: write
+#permissions:
+#  contents: write
+#  packages: write
 
 jobs:
   build:
@@ -70,9 +72,13 @@ jobs:
           fi
 
       - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
+        uses: svenstaro/upload-release-action@2.6.1
         with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
           upload_url: ${{ github.event.release.upload_url }}  # Use the upload_url from the release event
           asset_path: ${{ env.asset_path }}
           asset_name: ${{ env.asset_name }}
           asset_content_type: 'application/octet-stream'
+          file:  ${{ matrix.platform }}- ${{ env.asset_name }}
+          overwrite: true
