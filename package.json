@@ -1,6 +1,6 @@
 {
   "name": "owl-script-gaurd",
-  "version": "1.1.0",
+  "version": "v1.1.0",
   "description": "Javascript obfuscator gui app",
   "main": "./out/main/index.js",
   "author": "A1gard",
