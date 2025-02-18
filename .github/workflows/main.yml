@@ -81,7 +81,7 @@ jobs:
 
       - name: Extract tag name
         id: extract_tag
-        run: echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        run: echo "tag_name=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
       - name: Upload Release Asset mac 2
         if: runner.os == 'macOS'
