@@ -80,5 +80,5 @@ jobs:
           asset_path: ${{ env.asset_path }}
           asset_name: ${{ env.asset_name }}
           asset_content_type: 'application/octet-stream'
-          file:  ${{ matrix.platform }}- ${{ env.asset_name }}
+          file:  ${{ env.asset_name }}
           overwrite: true
