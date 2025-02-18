@@ -44,7 +44,7 @@ jobs:
           if [ "${{ runner.os }}" == "Linux" ]; then
             if [ -f "dist/owl-script-gaurd.AppImage" ]; then
               echo "asset_path=dist/owl-script-gaurd.AppImage" >> $GITHUB_ENV
-              echo "asset_name=owl-script-gaurd.AppImage" >> $GITHUB_ENV
+              echo "asset_name=owl-script-gaurd-linux-x64.AppImage" >> $GITHUB_ENV
             else
               echo "No valid Linux asset found."
               exit 1
@@ -52,7 +52,7 @@ jobs:
           elif [ "${{ runner.os }}" == "macOS" ]; then
             if [ -f "dist/owl-script-gaurd.dmg" ]; then
               echo "asset_path=dist/owl-script-gaurd.dmg" >> $GITHUB_ENV
-              echo "asset_name=owl-script-gaurd.dmg" >> $GITHUB_ENV
+              echo "asset_name=owl-script-gaurd-macos.dmg" >> $GITHUB_ENV
             elif [ -f "dist/owl-script-gaurd.zip" ]; then
               echo "asset_path=dist/owl-script-gaurd.zip" >> $GITHUB_ENV
               echo "asset_name=owl-script-gaurd.zip" >> $GITHUB_ENV
@@ -89,7 +89,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          asset_name: ${{ env.asset_name }}
+          asset_name: owl-script-guard-${{ env.tag_name }}-arm64-mac.zip
           file: dist/owl-script-guard-${{ env.tag_name }}-arm64-mac.zip
           overwrite: true
 
@@ -99,6 +99,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          asset_name: owl-script-gaurd-setup.exe
+          asset_name: owl-script-gaurd-setup-windows-x64.exe
           file: dist/owl-script-gaurd-setup.exe
           overwrite: true
