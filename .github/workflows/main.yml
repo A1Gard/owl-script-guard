@@ -34,26 +34,26 @@ jobs:
             yarn build:mac
           fi
 
-      - name: Check if Release Exists
-        id: check_release
-        run: |
-          TAG_NAME=${{ github.ref }}
-          RELEASE=$(gh release view $TAG_NAME --json id --jq '.id' 2>/dev/null || echo "")
-          echo "release_id=$RELEASE" >> $GITHUB_ENV
-
-      - name: Delete Existing Release
-        if: env.release_id != ''
-        run: |
-          TAG_NAME=${{ github.ref }}
-          gh release delete $TAG_NAME --yes
-
-      - name: Create Release
-        id: create_release
-        run: |
-          TAG_NAME=${{ github.ref }}
-          gh release create $TAG_NAME --title "Release $TAG_NAME" --notes "Release notes for $TAG_NAME"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Check if Release Exists
+#        id: check_release
+#        run: |
+#          TAG_NAME=${{ github.ref }}
+#          RELEASE=$(gh release view $TAG_NAME --json id --jq '.id' 2>/dev/null || echo "")
+#          echo "release_id=$RELEASE" >> $GITHUB_ENV
+#
+#      - name: Delete Existing Release
+#        if: env.release_id != ''
+#        run: |
+#          TAG_NAME=${{ github.ref }}
+#          gh release delete $TAG_NAME --yes
+#
+#      - name: Create Release
+#        id: create_release
+#        run: |
+#          TAG_NAME=${{ github.ref }}
+#          gh release create $TAG_NAME --title "Release $TAG_NAME" --notes "Release notes for $TAG_NAME"
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Determine Asset to Upload
         id: determine_asset
