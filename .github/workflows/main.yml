@@ -76,9 +76,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          upload_url: ${{ github.event.release.upload_url }}  # Use the upload_url from the release event
-          asset_path: ${{ env.asset_path }}
           asset_name: ${{ env.asset_name }}
-          asset_content_type: 'application/octet-stream'
-          file:  ${{ env.asset_name }}
+#          asset_content_type: 'application/octet-stream'
+          file:  ${{ env.asset_path }}
           overwrite: true
