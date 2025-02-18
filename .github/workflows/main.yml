@@ -86,7 +86,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
           asset_name: ${{ env.asset_name }}
-          file: dist/owl-script-guard-${{ github.ref }}-arm64-mac.zip
+          file: dist/owl-script-guard-v${{ env.tag_name }}-arm64-mac.zip
           overwrite: true
 
       - name: Upload Release Asset windows
