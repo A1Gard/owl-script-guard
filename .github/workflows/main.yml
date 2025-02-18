@@ -62,19 +62,39 @@ jobs:
             fi
           fi
 
-      - name: Determine Asset to Upload windows
-        id: determine_asset_win
-        if: runner.os == 'Windows'
-        run: |
-          echo "asset_path=dist\owl-script-gaurd-setup.exe" >> $GITHUB_ENV
-          echo "asset_name=owl-script-gaurd-setup.exe" >> $GITHUB_ENV
+#      - name: Determine Asset to Upload windows
+#        id: determine_asset_win
+#        if: runner.os == 'Windows'
+#        run: |
+#          echo "asset_path=dist\owl-script-gaurd-setup.exe" >> $GITHUB_ENV
+#          echo "asset_name=owl-script-gaurd-setup.exe" >> $GITHUB_ENV
 
       - name: Upload Release Asset
+        if: runner.os == 'Linux' || runner.os == 'macOS'
         uses: svenstaro/upload-release-action@2.6.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
           asset_name: ${{ env.asset_name }}
-#          asset_content_type: 'application/octet-stream'
           file:  ${{ env.asset_path }}
+          overwrite: true
+
+      - name: Upload Release Asset mac 2
+        if: runner.os == 'macOS'
+        uses: svenstaro/upload-release-action@2.6.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          asset_name: ${{ env.asset_name }}
+          file: dist/owl-script-guard-${{ github.ref }}-arm64-mac.zip
+          overwrite: true
+
+      - name: Upload Release Asset windows
+        if: runner.os == 'Windows'
+        uses: svenstaro/upload-release-action@2.6.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          asset_name: owl-script-gaurd-setup.exe
+          file: dist/owl-script-gaurd-setup.exe
           overwrite: true
