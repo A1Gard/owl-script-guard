@@ -62,12 +62,41 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Determine Asset to Upload
+      id: determine_asset
+      run: |
+        if [ "${{ runner.os }}" == "Linux" ]; then
+          if [ -f "dist/owl-script-gaurd-1.0.0.AppImage" ]; then
+            echo "asset_path=dist/owl-script-gaurd-1.0.0.AppImage" >> $GITHUB_ENV
+            echo "asset_name=owl-script-gaurd-1.0.0.AppImage" >> $GITHUB_ENV
+          elif [ -f "dist/owl-script-gaurd_1.0.0_amd64.deb" ]; then
+            echo "asset_path=dist/owl-script-gaurd_1.0.0_amd64.deb" >> $GITHUB_ENV
+            echo "asset_name=owl-script-gaurd_1.0.0_amd64.deb" >> $GITHUB_ENV
+          else
+            echo "No valid Linux asset found."
+            exit 1
+          fi
+        elif [ "${{ runner.os }}" == "Windows" ]; then
+          if [ -f "dist/owl-script-gaurd-1.0.0.exe" ]; then
+            echo "asset_path=dist/owl-script-gaurd-1.0.0.exe" >> $GITHUB_ENV
+            echo "asset_name=owl-script-gaurd-1.0.0.exe" >> $GITHUB_ENV
+          else
+            echo "No valid Windows asset found."
+            exit 1
+          fi
+        elif [ "${{ runner.os }}" == "macOS" ]; then
+          if [ -f "dist/owl-script-gaurd-1.0.0.dmg" ]; then
+            echo "asset_path=dist/owl-script-gaurd-1.0.0.dmg" >> $GITHUB_ENV
+            echo "asset_name=owl-script-gaurd-1.0.0.dmg" >> $GITHUB_ENV
+          else
+            echo "No valid macOS asset found."
+            exit 1
+          fi
+        fi
+
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ runner.os == 'Linux' && 'dist/owl-script-gaurd-1.0.0.AppImage' || runner.os == 'Linux' && 'dist/owl-script-gaurd_1.0.0_amd64.deb' || runner.os == 'Windows' && 'dist/owl-script-gaurd-1.0.0.exe' || runner.os == 'macOS' && 'dist/owl-script-gaurd-1.0.0.dmg' }}  # Change this to the path of your built app
-        asset_name: ${{ runner.os == 'Linux' && (contains(github.ref, 'AppImage') ? 'owl-script-gaurd-1.0.0.AppImage' : 'owl-script-gaurd_1.0.0_amd64.deb') || runner.os == 'Windows' && 'owl-script-gaurd-1.0.0.exe' || runner.os == 'macOS' && 'owl-script-gaurd-1.0.0.dmg' }}  # Change this to the desired name for the asset
-        asset_content_type: application/octet-stream  # Change this to the appropriate content type
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        asset_path: ${{ env.asset_path }}  # Use the determined asset path
+        asset_name: ${{ env.asset_name }}  # Use the determined asset name
