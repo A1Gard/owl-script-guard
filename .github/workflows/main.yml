@@ -59,31 +59,28 @@ jobs:
         id: determine_asset
         run: |
           if [ "${{ runner.os }}" == "Linux" ]; then
-            if [ -f "dist/owl-script-guard.AppImage" ]; then
-              echo "asset_path=dist/owl-script-guard.AppImage" >> $GITHUB_ENV
-              echo "asset_name=owl-script-guard.AppImage" >> $GITHUB_ENV
-            elif [ -f "dist/owl-script-guard_amd64.deb" ]; then
-              echo "asset_path=dist/owl-script-guard_amd64.deb" >> $GITHUB_ENV
-              echo "asset_name=owl-script-guard_amd64.deb" >> $GITHUB_ENV
+            if [ -f "dist/owl-script-gaurd.AppImage" ]; then
+              echo "asset_path=dist/owl-script-gaurd.AppImage" >> $GITHUB_ENV
+              echo "asset_name=owl-script-gaurd.AppImage" >> $GITHUB_ENV
             else
               echo "No valid Linux asset found."
               exit 1
             fi
           elif [ "${{ runner.os }}" == "Windows" ]; then
-            if [ -f "dist/owl-script-guard.exe" ]; then
-              echo "asset_path=dist/owl-script-guard.exe" >> $GITHUB_ENV
-              echo "asset_name=owl-script-guard.exe" >> $GITHUB_ENV
+            if [ -f "dist/owl-script-gaurd.exe" ]; then
+              echo "asset_path=dist/owl-script-gaurd.exe" >> $GITHUB_ENV
+              echo "asset_name=owl-script-gaurd.exe" >> $GITHUB_ENV
             else
               echo "No valid Windows asset found."
               exit 1
             fi
           elif [ "${{ runner.os }}" == "macOS" ]; then
-            if [ -f "dist/owl-script-guard.dmg" ]; then
-              echo "asset_path=dist/owl-script-guard.dmg" >> $GITHUB_ENV
-              echo "asset_name=owl-script-guard.dmg" >> $GITHUB_ENV
-            elif [ -f "dist/owl-script-guard.zip" ]; then
-              echo "asset_path=dist/owl-script-guard.zip" >> $GITHUB_ENV
-              echo "asset_name=owl-script-guard.zip" >> $GITHUB_ENV
+            if [ -f "dist/owl-script-gaurd.dmg" ]; then
+              echo "asset_path=dist/owl-script-gaurd.dmg" >> $GITHUB_ENV
+              echo "asset_name=owl-script-gaurd.dmg" >> $GITHUB_ENV
+            elif [ -f "dist/owl-script-gaurd.zip" ]; then
+              echo "asset_path=dist/owl-script-gaurd.zip" >> $GITHUB_ENV
+              echo "asset_name=owl-script-gaurd.zip" >> $GITHUB_ENV
             else
               echo "No valid macOS asset found."
               exit 1
