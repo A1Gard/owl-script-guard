@@ -2,6 +2,9 @@
 
 Javascript obfuscator gui app
 
+<div style="text-align">
+  <img alt="logo" src="./resources/owl-512.png" width="256" >
+</div>
 
 ## Screenshots
 
