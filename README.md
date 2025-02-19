@@ -2,33 +2,8 @@
 
 Javascript obfuscator gui app
 
-## Recommended IDE Setup
+## screenshots
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+![before](./screenshots/1.png)
 
-## Project Setup
-
-### Install
-
-```bash
-$ yarn
-```
-
-### Development
-
-```bash
-$ yarn dev
-```
-
-### Build
-
-```bash
-# For windows
-$ yarn build:win
-
-# For macOS
-$ yarn build:mac
-
-# For Linux
-$ yarn build:linux
-```
+![after](./screenshots/2.png)
