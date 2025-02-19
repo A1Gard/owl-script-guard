@@ -63,14 +63,36 @@ app.whenReady().then(() => {
     try {
       let r2 =  obfuscate(data,
         {
-          compact: false,
+          compact: true,
           controlFlowFlattening: true,
-          controlFlowFlatteningThreshold: 1,
+          controlFlowFlatteningThreshold: 0.75,
+          deadCodeInjection: true,
+          deadCodeInjectionThreshold: 0.4,
+          debugProtection: false,
+          debugProtectionInterval: 0,
+          disableConsoleOutput: true,
+          identifierNamesGenerator: 'hexadecimal',
+          log: false,
           numbersToExpressions: true,
+          renameGlobals: false,
+          selfDefending: true,
           simplify: true,
-          stringArrayShuffle: true,
           splitStrings: true,
-          stringArrayThreshold: 1
+          splitStringsChunkLength: 10,
+          stringArray: true,
+          stringArrayCallsTransform: true,
+          stringArrayCallsTransformThreshold: 0.75,
+          stringArrayEncoding: ['base64'],
+          stringArrayIndexShift: true,
+          stringArrayRotate: true,
+          stringArrayShuffle: true,
+          stringArrayWrappersCount: 2,
+          stringArrayWrappersChainedCalls: true,
+          stringArrayWrappersParametersMaxCount: 4,
+          stringArrayWrappersType: 'function',
+          stringArrayThreshold: 0.75,
+          transformObjectKeys: true,
+          unicodeEscapeSequence: false
         });
       const result = await minify(r2.getObfuscatedCode());
       event.reply('ugly-result',result.code);
