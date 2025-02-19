@@ -114,7 +114,7 @@ code {
   padding: 6px;
 }
 
-.action a {
+.action a, .action  select{
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
@@ -136,6 +136,13 @@ code {
   color: var(--ev-button-alt-hover-text);
   background-color: var(--ev-button-alt-hover-bg);
 }
+
+.action  select{
+  padding: .6rem;
+  }
+.action  select:focus{
+  outline: none;
+  }
 
 .versions {
   position: absolute;

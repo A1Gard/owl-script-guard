@@ -59,41 +59,72 @@ app.whenReady().then(() => {
     shell.openExternal("http://www.google.com")
     console.log('open link')
   })
-  ipcMain.on('ugly', async (event, data) => {
+  ipcMain.on('ugly', async (event, data, md) => {
     try {
-      let r2 =  obfuscate(data,
-        {
+      let mode = {
+        compact: true,
+        controlFlowFlattening: true,
+        controlFlowFlatteningThreshold: 0.75,
+        deadCodeInjection: true,
+        deadCodeInjectionThreshold: 0.4,
+        debugProtection: false,
+        debugProtectionInterval: 0,
+        disableConsoleOutput: true,
+        identifierNamesGenerator: 'hexadecimal',
+        log: false,
+        numbersToExpressions: true,
+        renameGlobals: false,
+        selfDefending: true,
+        simplify: true,
+        splitStrings: true,
+        splitStringsChunkLength: 10,
+        stringArray: true,
+        stringArrayCallsTransform: true,
+        stringArrayCallsTransformThreshold: 0.75,
+        stringArrayEncoding: ['base64'],
+        stringArrayIndexShift: true,
+        stringArrayRotate: true,
+        stringArrayShuffle: true,
+        stringArrayWrappersCount: 2,
+        stringArrayWrappersChainedCalls: true,
+        stringArrayWrappersParametersMaxCount: 4,
+        stringArrayWrappersType: 'function',
+        stringArrayThreshold: 0.75,
+        transformObjectKeys: true,
+        unicodeEscapeSequence: false
+      };
+      console.log(md)
+      if (md == 1){
+        mode = {
           compact: true,
-          controlFlowFlattening: true,
-          controlFlowFlatteningThreshold: 0.75,
-          deadCodeInjection: true,
-          deadCodeInjectionThreshold: 0.4,
+          controlFlowFlattening: false,
+          deadCodeInjection: false,
           debugProtection: false,
           debugProtectionInterval: 0,
           disableConsoleOutput: true,
           identifierNamesGenerator: 'hexadecimal',
           log: false,
-          numbersToExpressions: true,
+          numbersToExpressions: false,
           renameGlobals: false,
           selfDefending: true,
           simplify: true,
-          splitStrings: true,
-          splitStringsChunkLength: 10,
+          splitStrings: false,
           stringArray: true,
-          stringArrayCallsTransform: true,
-          stringArrayCallsTransformThreshold: 0.75,
-          stringArrayEncoding: ['base64'],
+          stringArrayCallsTransform: false,
+          stringArrayEncoding: [],
           stringArrayIndexShift: true,
           stringArrayRotate: true,
           stringArrayShuffle: true,
-          stringArrayWrappersCount: 2,
+          stringArrayWrappersCount: 1,
           stringArrayWrappersChainedCalls: true,
-          stringArrayWrappersParametersMaxCount: 4,
-          stringArrayWrappersType: 'function',
+          stringArrayWrappersParametersMaxCount: 2,
+          stringArrayWrappersType: 'variable',
           stringArrayThreshold: 0.75,
-          transformObjectKeys: true,
           unicodeEscapeSequence: false
-        });
+        };
+      }
+      let r2 =  obfuscate(data, mode
+        );
       const result = await minify(r2.getObfuscatedCode());
       event.reply('ugly-result',result.code);
     } catch (err) {

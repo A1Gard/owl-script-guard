@@ -18,6 +18,12 @@
           Open file
         </a>
       </div>
+      <div class="action">
+        <select v-model="mode">
+          <option value="0"> Best obfuscate </option>
+          <option value="1"> Safe obfuscate </option>
+        </select>
+      </div>
     </div>
     <div class="txt-center" @click="about">
       Owl script guard by A1Gard - xStack team
@@ -35,6 +41,7 @@ export default {
   },
   data: () => {
     return {
+      mode: 0,
       code: `const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -68,7 +75,7 @@ export default {
     },
     ugly() {
       // this.code = terser.minify(this.code);
-      window.electron.ipcRenderer.send('ugly', this.code)
+      window.electron.ipcRenderer.send('ugly', this.code, this.mode)
     },
     openfile() {
       window.electron.ipcRenderer.send('openfile')
