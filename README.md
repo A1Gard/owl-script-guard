@@ -6,4 +6,4 @@ Javascript obfuscator gui app
 
 ![before](./screenshots/1.png)
 
-![after](./screenshots/1.png)
+![after](./screenshots/2.png)
